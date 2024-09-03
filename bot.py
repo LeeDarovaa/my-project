@@ -1,15 +1,30 @@
+import threading
 import telebot
 from telebot import types  
 import time
+import os
+from flask import Flask
 
-# Инициализация бота
+app = Flask(__name__)
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
+
 bot = telebot.TeleBot('7087261239:AAFWiGpPwSqi5aB6HuqPjvyfoelRpsz9UTE')
+
+@app.route('/')
+def home():
+    return "Бот работает!"
+
+def start_bot():
+    print("Бот запущен и готов к работе.")
 
 @bot.message_handler(commands=['start'])
 def start_game(message):
     chat_id = message.chat.id
     
-    # Создание клавиатуры для выбора действия
+    
     keyboard = types.InlineKeyboardMarkup()
     option_1_button = types.InlineKeyboardButton("Правила (рекомендую)", callback_data='rules')
     option_2_button = types.InlineKeyboardButton("Начать игру", callback_data='start_game')
@@ -48,6 +63,8 @@ def handle_query(call):
         )
         bot.send_message(chat_id, rules_text)
         bot.send_message(call.message.chat.id, rules_text)
+
+
 
     elif call.data in ['option_1', 'option_2']:
         if call.data =='option_1':
@@ -276,10 +293,10 @@ def handle_query(call):
         time.sleep(4)
         
         bot.send_message(call.message.chat.id, "тогда выйду на связь чуть позже")
-        time.sleep(900)
+        time.sleep(5)
         
         bot.send_message(call.message.chat.id, "я тут")
-        time.sleep(4)
+        time.sleep(100)
         
         bot.send_message(call.message.chat.id, "ворота закрыты, коровы мычат, загон в который меня закиунли- открыт")
         time.sleep(3)
@@ -525,10 +542,10 @@ def handle_query(call):
             time.sleep(3)
             
             bot.send_message(call.message.chat.id, "да, хорошо. тогда напишу тогда позже")
-            time.sleep(2)
+            time.sleep(220)
             
             bot.send_message(call.message.chat.id, "я тут")
-            time.sleep(220)
+            time.sleep(2)
             
             bot.send_message(call.message.chat.id, "ключ подошел")
             time.sleep(6)
@@ -3550,52 +3567,10 @@ def callback_query(call):
         parse_mode='Markdown'
     )
 
-
-
-
-
-
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-
-
-
-            
-        
-            
-            
-                    
-        
-        
-            
-            
-            
-        
-        
-
-
-
-
-
-
-
+    bot.polling(non_stop=True)
+      
                    
-bot.polling(none_stop=True)
+bot.remove_webhook()
+bot.set_webhook(url='https://my-unique-app-name-234.herokuapp.com/' + '7087261239:AAFWiGpPwSqi5aB6HuqPjvyfoelRpsz9UTE')
