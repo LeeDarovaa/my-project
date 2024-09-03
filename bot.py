@@ -293,10 +293,10 @@ def handle_query(call):
         time.sleep(4)
         
         bot.send_message(call.message.chat.id, "тогда выйду на связь чуть позже")
-        time.sleep(5)
+        time.sleep(100)
         
         bot.send_message(call.message.chat.id, "я тут")
-        time.sleep(100)
+        time.sleep(5)
         
         bot.send_message(call.message.chat.id, "ворота закрыты, коровы мычат, загон в который меня закиунли- открыт")
         time.sleep(3)
